@@ -21,12 +21,12 @@ namespace CameraTest7
         public ShowImage()
         {
             InitializeComponent();
-            bmp1 = (BitmapImage)PhoneApplicationService.Current.State["image"];
+            bmp1 = (BitmapImage)PhoneApplicationService.Current.State["image0"];
             bg.ImageSource = bmp1;
             bmp = new WriteableBitmap(bmp1);
             txt.Text = "width = " + bmp1.PixelWidth.ToString() + " height = " + bmp1.PixelHeight.ToString();
             utils = new Utils(bmp1.PixelWidth, bmp1.PixelHeight);
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 2; i++)
             {
                 StartOcr(new WriteableBitmap((BitmapImage)PhoneApplicationService.Current.State["image"+i.ToString()]));
             }
@@ -67,9 +67,9 @@ namespace CameraTest7
                 alltext[count] = text;
                 count++;
                 int index = 0;
-                if (count == 10) {
+                if (count == 2) {
                     int max = 0;
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         if (alltext[i].Count > max) {
                             max = alltext[i].Count;

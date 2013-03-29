@@ -56,6 +56,8 @@ namespace CameraTest7
             }
         }
 
+        int cc = 0;
+
         private void cam_AutoFocusCompleted(object sender, CameraOperationCompletedEventArgs e)
         {
             camera.CaptureImage();
@@ -154,12 +156,10 @@ namespace CameraTest7
                 txtmsg.Text = "start 1";
                 Thread.Sleep(600);
                 startFlash();
-                for (int i = 0; i < 10; i++)
-                {
-                    txtmsg.Text = i.ToString();
-                    Thread.Sleep(600);
-                    camera.Focus();
-                }
+                
+                camera.Focus();
+                
+                //camera.Focus();
             });
         }
 
@@ -168,6 +168,14 @@ namespace CameraTest7
             Dispatcher.BeginInvoke(delegate()
             {
                 txtmsg.Text = "Image captured";
+                if (cc < 3)
+                {
+                    camera.Focus();
+                    cc++;
+                }
+                else {
+
+                }
             });
         }
 
@@ -188,7 +196,7 @@ namespace CameraTest7
                 }
                 PhoneApplicationService.Current.State["image" + count.ToString()] = bmpImage;
                 count++;
-                if(count == 9)
+                if(count == 3)
                     NavigationService.Navigate(new Uri("/ShowImage.xaml", UriKind.Relative));
                 //txtmsg.Text = "Everything finished happily :)";
             });
@@ -260,6 +268,11 @@ namespace CameraTest7
                 }
                 catch (Exception ex) { }
             }
+        }
+
+        private void loaded(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
