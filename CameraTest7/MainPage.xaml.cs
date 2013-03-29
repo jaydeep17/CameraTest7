@@ -28,6 +28,7 @@ namespace CameraTest7
         private WriteableBitmap wb;   // wb for original image
         private Utils utils;
         private BitmapImage bmp;
+        int count = 0;
 
         // Constructor
         public MainPage()
@@ -150,8 +151,15 @@ namespace CameraTest7
                 utils = new Utils(w, h);
                 img.Source = wb;
                 imageProcessing.Start();
-                txtmsg.Text = "width = " + w.ToString() + " height = " + h.ToString();
+                txtmsg.Text = "start 1";
+                Thread.Sleep(600);
                 startFlash();
+                for (int i = 0; i < 10; i++)
+                {
+                    txtmsg.Text = i.ToString();
+                    Thread.Sleep(600);
+                    camera.Focus();
+                }
             });
         }
 
@@ -178,8 +186,10 @@ namespace CameraTest7
                     wb.SaveJpeg(ms, (int)wb.PixelWidth, (int)wb.PixelHeight, 0, 100);
                     bmpImage.SetSource(ms);
                 }
-                PhoneApplicationService.Current.State["image"] = bmpImage;
-                NavigationService.Navigate(new Uri("/ShowImage.xaml", UriKind.Relative));
+                PhoneApplicationService.Current.State["image" + count.ToString()] = bmpImage;
+                count++;
+                if(count == 9)
+                    NavigationService.Navigate(new Uri("/ShowImage.xaml", UriKind.Relative));
                 //txtmsg.Text = "Everything finished happily :)";
             });
         }
