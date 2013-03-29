@@ -150,7 +150,7 @@ namespace CameraTest7
                 utils = new Utils(w, h);
                 img.Source = wb;
                 imageProcessing.Start();
-                txtmsg.Text = "width = " + w.ToString() + " height = " + h.ToString();
+                txtmsg.Text = "start 1";
                 startFlash();
             });
         }

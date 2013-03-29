@@ -70,7 +70,7 @@ namespace CameraTest7
         {
             this.width = width;
             this.height = height;
-            this.offset = 80;
+            this.offset = 30;
         }
 
         public int[] GrayScale(int[] pixels)
@@ -181,10 +181,10 @@ namespace CameraTest7
                     Color c = DecodeColor(color);
                     intensity += (int)(c.R + c.G + c.B) / 3;
                 }
-                intensity = intensity / (l * this.height);
-                if (intensity > limit)//(limit / offset))
-                    return true;
             }
+            intensity = intensity / (l * this.height);
+            if (intensity < limit + limit/offset)//(limit / offset))
+                return true;
             return false;
         }
 
@@ -200,10 +200,10 @@ namespace CameraTest7
                     Color c = DecodeColor(color);
                     intensity += (int)(c.R + c.G + c.B) / 3;
                 }
-                intensity = intensity / ((this.width-l) * this.height);
-                if (intensity > limit)//(limit / offset))
-                    return true;
             }
+            intensity = intensity / ((this.width - l) * this.height);
+            if (intensity < limit + limit/offset)//(limit / offset))
+                return true;
             return false;
         }
 
