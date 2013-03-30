@@ -148,10 +148,10 @@ namespace CameraTest7
             limit = GetIntensity(pixels);
             Boundaries b = new Boundaries();
             
-            b.Right = CheckRight(pixels, boundayFactor);
-            b.Left = CheckLeft(pixels, boundayFactor);
-            b.Top = CheckTop(pixels, boundayFactor);
-            b.Bottom = CheckBottom(pixels, boundayFactor);
+            b.Bottom = CheckRight(pixels, boundayFactor);
+            b.Top = CheckLeft(pixels, boundayFactor);
+            b.Right = CheckTop(pixels, boundayFactor);
+            b.Left = CheckBottom(pixels, boundayFactor);
             return b;
         }
 

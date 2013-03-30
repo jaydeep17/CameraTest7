@@ -48,6 +48,7 @@ namespace CameraTest7
                 camera.CaptureImageAvailable += new EventHandler<ContentReadyEventArgs>(captureImageAvailable);
                 camera.AutoFocusCompleted += new EventHandler<CameraOperationCompletedEventArgs>(cam_AutoFocusCompleted);
                 viewfinderBrush.SetSource(camera);
+                previewTransform.Rotation = camera.Orientation;// -90.0;
             }
             else
             {
