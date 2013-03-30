@@ -13,7 +13,7 @@ namespace CameraTest7
 {
     public class Utils
     {
-        private int width, height, offset, limit;
+        private int width, height, offset = 120, limit;
 
         /// <summary>
         /// The Hawaii Application Id.
@@ -92,7 +92,8 @@ namespace CameraTest7
                 int r = (color & 0x00ff0000) >> 16;
                 int g = (color & 0x0000ff00) >> 8;
                 int b = (color & 0x000000ff);
-                int lumi = (7 * r + 38 * g + 19 * b + 32) >> 6;
+                //int lumi = (7 * r + 38 * g + 19 * b + 32) >> 6;
+                int lumi = (r + g + b) / 3;
                 if (lumi < threshold)
                     pixels[i] = EncodeColor(Colors.Black);
                 else
@@ -149,8 +150,8 @@ namespace CameraTest7
             
             b.Right = CheckRight(pixels, boundayFactor);
             b.Left = CheckLeft(pixels, boundayFactor);
-            //b.Top = CheckTop(pixels, boundayFactor);
-            //b.Bottom = CheckBottom(pixels, boundayFactor);
+            b.Top = CheckTop(pixels, boundayFactor);
+            b.Bottom = CheckBottom(pixels, boundayFactor);
             return b;
         }
 
@@ -171,78 +172,69 @@ namespace CameraTest7
 
         private bool CheckLeft(int[] bmp, double bf)
         {
-            int l = (int)Math.Ceiling(this.width * bf);
             int intensity = 0;
-            for (int i = 0; i < l; i++)
-            {
-                for (int j = 0; j < this.height - 1; j++)
-                {
-                    int color = GetPixel(bmp, j, i);
-                    Color c = DecodeColor(color);
-                    intensity += (int)(c.R + c.G + c.B) / 3;
-                }
-                intensity = intensity / (l * this.height);
-                if (intensity > limit)//(limit / offset))
-                    return true;
+            for (int row = 0; row < this.height; row++) {
+                int color = GetPixel(bmp,row, 0);
+                Color c = DecodeColor(color);
+                intensity += (c.R + c.B + c.G) / 3;
+
             }
-            return false;
+
+            intensity = intensity / this.height;
+            if (intensity < offset) {
+                return false;
+            }
+            return true;
         }
 
         private bool CheckRight(int[] bmp, double bf)
         {
             int l = (int)Math.Floor(this.width * (1 - bf));
             int intensity = 0;
-            for (int i = this.width - 1; i >= l; i--)
+            for (int row = 0; row < this.height; row++)
             {
-                for (int j = 0; j < this.height; j++)
-                {
-                    int color = GetPixel(bmp, j, i);
-                    Color c = DecodeColor(color);
-                    intensity += (int)(c.R + c.G + c.B) / 3;
-                }
-                intensity = intensity / ((this.width-l) * this.height);
-                if (intensity > limit)//(limit / offset))
-                    return true;
+                int color = GetPixel(bmp, row, this.width -1);
+                Color c = DecodeColor(color);
+                intensity += (c.R + c.B + c.G) / 3;
+
             }
-            return false;
+
+            intensity = intensity / this.height;
+            if (intensity < offset)
+            {
+                return false;
+            }
+            return true;
         }
 
         private bool CheckTop(int[] bmp, double bf)
         {
-            int l = (int)Math.Ceiling(this.height * bf);
-            for (int i = 0; i < l; i++)
+            int intensity = 0;
+            for (int col = 0; col < this.width; col++)
             {
-                int count = 0;
-                for (int j = 0; j < this.width; j++)
-                {
-                    if (GetPixel(bmp, i, j) != 0)
-                    {
-                        count++;
-                    }
-                }
-                if (count > 12)
-                    return true;
+                int color = GetPixel(bmp, 0, col);
+                Color c = DecodeColor(color);
+                intensity += (c.R + c.B + c.G) / 3;
             }
-            return false;
+            intensity /= this.height;
+            if (intensity < offset)
+                return false;
+            return true;
         }
 
         private bool CheckBottom(int[] bmp, double bf)
         {
-            int l = (int)Math.Floor(this.height * (1 - bf));
-            for (int i = this.height - 1; i >= l; i--)
+            int intensity = 0;
+            for (int col = 0; col < this.width; col++)
             {
-                int count = 0;
-                for (int j = 0; j < this.width; j++)
-                {
-                    if (GetPixel(bmp, i, j) != 0)
-                    {
-                        count++;
-                    }
-                }
-                if (count > 12)
-                    return true;
+                int color = GetPixel(bmp, this.height - 1, col);
+                Color c = DecodeColor(color);
+                intensity += (c.R + c.B + c.G) / 3;
             }
-            return false;
+            intensity /= this.height;
+            if (intensity < offset)
+                return false;
+            return true;
         }
 
         private int GetPixel(int[] pixels, int i, int j)

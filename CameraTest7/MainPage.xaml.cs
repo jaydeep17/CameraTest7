@@ -76,9 +76,9 @@ namespace CameraTest7
                 {
                     pauseFramesEvent.WaitOne();
                     phCam.GetPreviewBufferArgb32(ARGBPx);
-                    //ARGBPx = utils.Binarize(ARGBPx, 151);   // try & error with threashold value
+                    ARGBPx = utils.Binarize(ARGBPx, 125);   // try & error with threashold value
                     //ARGBPx = utils.Bitwise_not(ARGBPx);   // STILL BUGGY - Makes the Image disappear
-                    //ARGBPx = utils.Erode(ARGBPx, w, h);
+                    ARGBPx = utils.Erode(ARGBPx, w, h);
                     Utils.Boundaries b = utils.CheckBoundaries(ARGBPx);
                     ImageHandler(b);
                     pauseFramesEvent.Reset();
@@ -122,6 +122,10 @@ namespace CameraTest7
                     s += " right ";
                 if (b.Left)
                     s += " left ";
+                if (b.Top)
+                    s += " Top ";
+                if (b.Bottom)
+                    s += " bottom ";
 
                 Dispatcher.BeginInvoke(delegate() { txtmsg.Text = s; });
             }
@@ -190,7 +194,7 @@ namespace CameraTest7
             {
                 try
                 {
-                    //camera.Focus();
+                    camera.Focus();
                 }
 
                 catch (Exception ex)
