@@ -22,15 +22,16 @@ namespace CameraTest7
         {
             InitializeComponent();
             bmp1 = (BitmapImage) PhoneApplicationService.Current.State["image"];
-            bg.ImageSource = bmp1;
+            //bg.ImageSource = bmp1;
             bmp = new WriteableBitmap(bmp1);
+            bmp = bmp.Rotate(90);
+            bg.ImageSource = bmp;
             txt.Text = "width = " + bmp1.PixelWidth.ToString() + " height = " + bmp1.PixelHeight.ToString();
             utils = new Utils(bmp1.PixelWidth, bmp1.PixelHeight);
         }
 
         private void StartOcr()
         {
-
             if (bmp1.PixelHeight > 640 || bmp1.PixelWidth > 640)
                 Utils.resizeImage(ref bmp);
 

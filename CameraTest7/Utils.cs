@@ -181,15 +181,43 @@ namespace CameraTest7
             }
 
             intensity = intensity / this.height;
-            if (intensity < offset) {
+            if (intensity < offset)
+            {
                 return false;
             }
-            return true;
+            else {
+                int col, row;
+                try
+                {
+                    for (col = 0; col < this.width /2 ; col++)
+                    {
+                        intensity = 0;
+                        for (row = 0; row < this.height; row++)
+                        {
+                            int color = GetPixel(bmp, row, col);
+                            Color c = DecodeColor(color);
+                            intensity += (int)(c.R + c.G + c.B) / 3;
+                            //color = GetPixel(bmp, row, col + 1);
+                            //c = DecodeColor(color);
+                            //intensity += (int)(c.R + c.G + c.B) / 3;
+                        }
+                        intensity /= ( this.height);
+                        if (intensity < offset)
+                            return false;
+                    }
+                    return true;
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+                
+            }
         }
 
         private bool CheckRight(int[] bmp, double bf)
         {
-            int l = (int)Math.Floor(this.width * (1 - bf));
             int intensity = 0;
             for (int row = 0; row < this.height; row++)
             {
@@ -204,7 +232,35 @@ namespace CameraTest7
             {
                 return false;
             }
-            return true;
+            else {
+                int col, row;
+                try
+                {
+                    for ( col = 1; col < this.width / 2; col++)
+                    {
+                        intensity = 0;
+                        for ( row = 0; row < this.height; row++)
+                        {
+                            int color = GetPixel(bmp, row, this.width - col - 1);
+                            Color c = DecodeColor(color);
+                            intensity += (int)(c.R + c.G + c.B) / 3;
+                            //color = GetPixel(bmp, row, this.width - col);
+                            //c = DecodeColor(color);
+                            //intensity += (int)(c.R + c.G + c.B) / 3;
+                        }
+                        intensity /= ( this.height);
+                        if (intensity < offset)
+                            return false;
+                    }
+                    return true;
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+                
+            }
         }
 
         private bool CheckTop(int[] bmp, double bf)

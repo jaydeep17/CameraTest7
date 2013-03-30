@@ -77,6 +77,7 @@ namespace CameraTest7
                 {
                     pauseFramesEvent.WaitOne();
                     phCam.GetPreviewBufferArgb32(ARGBPx);
+                    
                     ARGBPx = utils.Binarize(ARGBPx, 125);   // try & error with threashold value
                     //ARGBPx = utils.Bitwise_not(ARGBPx);   // STILL BUGGY - Makes the Image disappear
                     ARGBPx = utils.Erode(ARGBPx, w, h);
@@ -135,11 +136,11 @@ namespace CameraTest7
                 Dispatcher.BeginInvoke(delegate()
                 {
                     txtmsg.Text = "Please don't move the phone, let me click";
-                    
+                    //camera.Focus();
                     //camera.CaptureImage();
                     //pumpARGBFrames = false;
                 });
-                //camera.Focus();
+                camera.Focus();
             }
         }
 
