@@ -31,6 +31,7 @@
             </Canvas.Background>
             <TextBlock x:Name="txtmsg" Canvas.Left="10" TextWrapping="Wrap" Text="TextBlock" Canvas.Top="10"/>
             <Image x:Name="img" Height="180" Canvas.Left="220" Canvas.Top="578" Width="250"/>
+            <TextBlock x:Name="accTextbox" Canvas.Left="398" TextWrapping="Wrap" Text="TextBlock" Canvas.Top="10"/>
         </Canvas>
     </Grid>
  

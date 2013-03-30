@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Shell;
 using System.Windows.Media.Imaging;
 using System.IO;
+using Microsoft.Devices.Sensors;
+using Microsoft.Xna.Framework;
 
 namespace CameraTest7
 {
@@ -23,18 +25,56 @@ namespace CameraTest7
     {
         private PhotoCamera camera;
         private Thread imageProcessing;
-        private static bool pumpARGBFrames;
+        private static bool pumpARGBFrames, isStable = false;
         private static ManualResetEvent pauseFramesEvent = new ManualResetEvent(true);
         private WriteableBitmap wb;   // wb for original image
         private Utils utils;
         private BitmapImage bmp;
-
+        public static Accelerometer acc;
+        public double oldx;
+        public double oldy;
+        public double oldz;
         // Constructor
         public MainPage()
         {
             InitializeComponent();
             bmp = new BitmapImage(new Uri("img.jpg", UriKind.Relative));
             bmp.CreateOptions = BitmapCreateOptions.None;
+            acc = new Accelerometer();
+            try
+            {
+
+                acc.Start();
+                acc.CurrentValueChanged += new EventHandler<SensorReadingEventArgs<AccelerometerReading>>(acc_CurrentValueChanged);
+                oldy = acc.CurrentValue.Acceleration.Y;
+                oldx = acc.CurrentValue.Acceleration.X;
+                oldz = acc.CurrentValue.Acceleration.Z;
+            }
+            catch (Microsoft.Devices.Sensors.AccelerometerFailedException)
+            {
+
+            }
+           
+        }
+
+        void acc_CurrentValueChanged(object sender, SensorReadingEventArgs<AccelerometerReading> e)
+        {
+
+            Dispatcher.BeginInvoke(delegate()
+            {
+
+                if (Math.Abs((double)(oldx - acc.CurrentValue.Acceleration.X)) > 0.20 || Math.Abs((double)(oldy - acc.CurrentValue.Acceleration.Y)) > 0.20)
+                {
+                    accTextbox.Text = "Rotate";
+                    isStable = false;
+                }
+                else
+                {
+                    accTextbox.Text = "Good";
+                    isStable = true;
+                }
+            });
+      
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -77,7 +117,6 @@ namespace CameraTest7
                 {
                     pauseFramesEvent.WaitOne();
                     phCam.GetPreviewBufferArgb32(ARGBPx);
-                    
                     ARGBPx = utils.Binarize(ARGBPx, 125);   // try & error with threashold value
                     //ARGBPx = utils.Bitwise_not(ARGBPx);   // STILL BUGGY - Makes the Image disappear
                     ARGBPx = utils.Erode(ARGBPx, w, h);
@@ -136,11 +175,11 @@ namespace CameraTest7
                 Dispatcher.BeginInvoke(delegate()
                 {
                     txtmsg.Text = "Please don't move the phone, let me click";
-                    //camera.Focus();
                     //camera.CaptureImage();
                     //pumpARGBFrames = false;
                 });
-                camera.Focus();
+                if(isStable)
+                    camera.Focus();
             }
         }
 
