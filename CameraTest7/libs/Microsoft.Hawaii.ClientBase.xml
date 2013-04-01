@@ -1,0 +1,765 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Hawaii.ClientBase</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Hawaii.Status">
+            <summary>
+            Describes the status of a Hawaii service call.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.Status.Unspecified">
+            <summary>
+            Defaut status code.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.Status.Success">
+            <summary>
+            Specifies that the service call completed successfully.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.Status.InternalServerError">
+            <summary>
+            Specifies that the service call completed with an internal server error.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.Status.Error">
+            <summary>
+            Specifies that the service call completed with an error.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.ServiceFault">
+            <summary>
+            Represents an error returned to the client.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceFault.Message">
+            <summary>
+            Gets or sets the message.
+            </summary>
+            <value>
+            The message.
+            </value>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceFault.RequestId">
+            <summary>
+            Gets or sets the correlation ID of the message.
+            </summary>
+            <value>
+            The id uniquely identifying the message
+            </value>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceFault.ExceptionStack">
+            <summary>
+            Gets or sets the exception stack.
+            </summary>
+            <value>
+            The exception stack.
+            </value>
+        </member>
+        <member name="T:Microsoft.Hawaii.AdmAccessToken">
+            <summary>
+            The adm access token.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.AdmAccessToken.AccessToken">
+            <summary>
+            Gets or sets the access token.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.AdmAccessToken.TokenType">
+            <summary>
+            Gets or sets the token type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.AdmAccessToken.ExpiresIn">
+            <summary>
+            Gets or sets the seconds token will expire in.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.AdmAccessToken.Scope">
+            <summary>
+            Gets or sets the scope.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.AdmAccessToken.ExpriesAtUtc">
+            <summary>
+            Gets or sets the time token will expire.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.AdmAuthClientIdentity">
+            <summary>
+            The adm authentication client identity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.ClientIdentity">
+            <summary>
+            ClientIdentity represents a client identity for the purposes of communicating with the server.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.ClientIdentity.#ctor">
+            <summary>
+            Initializes a new instance of the ClientIdentity class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.ClientIdentity.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the ClientIdentity class.
+            </summary>
+            <param name="registrationId">Specifies a registration id.</param>
+            <param name="secretKey">Specifies a secret key.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ClientIdentity.RetriveAccessToken(Microsoft.Hawaii.ClientIdentity.RetriveAccessTokenComplete)">
+            <summary>
+            Gets the identity token that is used when communicating with the server.
+            </summary>
+            <param name="callback">callback from event</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ClientIdentity.Copy">
+            <summary>
+            Derived class provides implementation.
+            </summary>
+            <returns>Returns the client identity</returns>
+        </member>
+        <member name="M:Microsoft.Hawaii.ClientIdentity.OnRetriveAccessTokenComplete(System.String,System.Exception,Microsoft.Hawaii.ClientIdentity.RetriveAccessTokenComplete)">
+            <summary>
+            Helper method to fire the RetriveAccessTokenCompleteEvent event.
+            </summary>
+            <param name="accessToken">The accesss token string</param>
+            <param name="ex">Coressponding exception if failed to get the access token.</param>
+            <param name="callback">callback from event</param>
+        </member>
+        <member name="P:Microsoft.Hawaii.ClientIdentity.RegistrationId">
+            <summary>
+            Gets or sets the registration id.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ClientIdentity.SecretKey">
+            <summary>
+            Gets or sets the secret key.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.ClientIdentity.RetriveAccessTokenComplete">
+            <summary>
+            The delegate of RetriveAccessTokenEvent event.
+            </summary>
+            <param name="accessToken">The access token string.</param>
+            <param name="ex">Coressponding exception if failed to get the access token.</param>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmAuthClientIdentity.AdmOAuthEndpoint">
+            <summary>
+            Specifies the adm OAuth service endpoint.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmAuthClientIdentity.StagingServiceScopeConfigFileName">
+            <summary>
+            The name of the config file that indicates what is the service scope. Used only as a test hook.
+            All the hawaii services share one single service scope.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmAuthClientIdentity.tokenServices">
+            <summary>
+            A dictionary mapping clientids to tokenservice instances
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmAuthClientIdentity.tokenService">
+            <summary>
+            The adm token service instance.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmAuthClientIdentity.clientId">
+            <summary>
+            The adm client Id.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmAuthClientIdentity.clientSecret">
+            <summary>
+            The adm client secret.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmAuthClientIdentity.scope">
+            <summary>
+            The adm service scope.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmAuthClientIdentity.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the AdmAuthClientIdentity class.
+            </summary>
+            <param name="clientId">The adm client Id.</param>
+            <param name="clientSecret">The adm client secret.</param>
+            <param name="scope">The scope Uri.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmAuthClientIdentity.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the AdmAuthClientIdentity class.
+            </summary>
+            <param name="clientId">The adm client Id.</param>
+            <param name="clientSecret">The adm client secret.</param>
+            <param name="scope">The scope Uri.</param>
+            <param name="registrationId">The registration Id.</param>
+            <param name="secretKey">The secret key.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmAuthClientIdentity.GetServiceScope(System.String)">
+            <summary>
+            Returns the service scope to be used when accessing the adm OAuth service. This will generally
+            be the value generated by the DefaultServiceScope, but it can conditionally be set with
+            the presence of a config file on first access.
+            </summary>
+            <param name="serviceBaseUri">The target service base Uri.</param>
+            <returns>Returns the service scope</returns>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmAuthClientIdentity.Copy">
+            <summary>
+            Override the method to copy Adm authentication identity
+            </summary>
+            <returns>Returns the client identity</returns>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmAuthClientIdentity.RetriveAccessToken(Microsoft.Hawaii.ClientIdentity.RetriveAccessTokenComplete)">
+            <summary>
+            Override the method to retrive the access token for Adm authentication.
+            </summary>
+            <param name="callback">event callback</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmAuthClientIdentity.TokenService_GetAdmAccessTokenCompleteEvent(Microsoft.Hawaii.AdmAccessToken,System.Exception,Microsoft.Hawaii.ClientIdentity.RetriveAccessTokenComplete)">
+            <summary>
+            The callback handler of GetAdmAccessToken event of AdmTokenService.
+            </summary>
+            <param name="accessToken">The token instance.</param>
+            <param name="ex">Coressponding exception if failed to get the access token.</param>
+            <param name="callback">callback from event</param>
+        </member>
+        <member name="P:Microsoft.Hawaii.AdmAuthClientIdentity.ClientId">
+            <summary>
+            Gets the Adm client Id.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.HttpMethod">
+            <summary>
+            Specifies the HTTP method that is used when communicating with the server.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.HttpMethod.Get">
+            <summary>
+            Represents the Http Get method.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.HttpMethod.Post">
+            <summary>
+            Represents the Http Post method.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.HttpMethod.Put">
+            <summary>
+            Represents the Http Put method.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.HttpMethod.Delete">
+            <summary>
+            Represents the Http Delete method.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.ServiceResult">
+            <summary>
+            A base class for all Hawaii service result classes. 
+            Various Hawaii service result classes will represent the result corresponding to different type of Hawaii service calls. 
+            This class contains functionality common to all Hawaii service result classes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceResult.#ctor">
+            <summary>
+            Initializes a new instance of the ServiceResult class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceResult.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the ServiceResult class.
+            </summary>
+            <param name="stateObject">Specifies a user-defined object.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceResult.#ctor(System.Object,Microsoft.Hawaii.Status)">
+            <summary>
+            Initializes a new instance of the ServiceResult class.
+            </summary>
+            <param name="stateObject">Specifies a user-defined object.</param>
+            <param name="status">Specifies the status of the service call.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceResult.#ctor(System.Object,Microsoft.Hawaii.Status,System.Exception)">
+            <summary>
+            Initializes a new instance of the ServiceResult class.
+            </summary>
+            <param name="stateObject">Specifies a user-defined object.</param>
+            <param name="status">Specifies the status of the service call.</param>
+            <param name="exception">An exception instance used if an error occured during the service call.</param>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceResult.Exception">
+            <summary>
+            Gets or sets the error exception.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceResult.Status">
+            <summary>
+            Gets or sets the status of the service call.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceResult.RequestId">
+            <summary>
+            Gets or sets the Service-generated RequestId.  Used for debugging
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceResult.ServerExceptionStack">
+            <summary>
+            Gets or sets the Service-side exceptions.  Used for debugging
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceResult.StateObject">
+            <summary>
+            Gets or sets a user-defined object.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.AdmTokenServiceRequestState">
+            <summary>
+            The request state for Adm token service.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmTokenServiceRequestState.#ctor">
+            <summary>
+            Initializes a new instance of the AdmTokenServiceRequestState class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmTokenServiceRequestState.#ctor(Microsoft.Hawaii.AdmTokenService.RetriveAdmAccessTokenComplete,System.Net.HttpWebRequest)">
+            <summary>
+            Initializes a new instance of the AdmTokenServiceRequestState class.
+            </summary>
+            <param name="callback">The callback delegate</param>
+            <param name="request">The request</param>
+        </member>
+        <member name="P:Microsoft.Hawaii.AdmTokenServiceRequestState.Callback">
+            <summary>
+            Gets or sets the callback delegates
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.AdmTokenServiceRequestState.Request">
+            <summary>
+            Gets or sets the http request.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.ServiceAgent`1">
+            <summary>
+            A base class for all Hawaii service agent classes. 
+            These agents are wrapping the communication tasks specific to each service.
+            ServiceAgent provides functionality common to all these clases.
+            </summary>
+            <typeparam name="T">Generic Type</typeparam>
+        </member>
+        <member name="F:Microsoft.Hawaii.ServiceAgent`1.request">
+            <summary>
+            The http request object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.#ctor">
+            <summary>
+            Initializes a new instance of the ServiceAgent class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.#ctor(Microsoft.Hawaii.HttpMethod,System.Object)">
+            <summary>
+            Initializes a new instance of the ServiceAgent class.
+            </summary>
+            <param name="requestMethod">Specifies a http request method.</param>
+            <param name="stateObject">Specifies a user-defined object.</param> 
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.ProcessRequest(Microsoft.Hawaii.ServiceAgent{`0}.OnCompleteDelegate)">
+            <summary>
+            This method initiates the asynchronous service call.
+            </summary>
+            <param name="handlerMethod">
+            The on complete" callback that will be invoked after the service call completes.
+            </param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.DeserializeResponse``1(System.IO.Stream)">
+            <summary>
+            Deserializes the response stream.
+            </summary>
+            <typeparam name="TResult">Result object.</typeparam>
+            <param name="responseStream">Server response stream.</param>
+            <returns>Deserailized object.</returns>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.DeserializeResponseJson``1(System.IO.Stream)">
+            <summary>
+            Deserializes the response stream using JSON serializer.
+            </summary>
+            <typeparam name="TResult">Result object.</typeparam>
+            <param name="responseStream">Server response stream.</param>
+            <returns>Deserailized object.</returns>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.GetPostData">
+            <summary>
+            This method must be implemented by all classes that inherit from ServiceAgent. 
+            It will provide the POST data that has to be sent to the service if the Http Method used is POST.
+            </summary>
+            <returns>Returns the POST data in byte array format.</returns>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.ParseOutput(System.IO.Stream)">
+            <summary>
+            This method is called after the response sent by the server is received by the client.
+            It allows classes that inherit from ServiceAgent to do their own processing of 
+            the data received from the server.
+            </summary>
+            <param name="responseStream">
+            The response stream containing response data that is received from the server.
+            </param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.OnCompleteRequest">
+            <summary>
+            A virtual method. It is invoked after completing the service request.
+            The implementation of this base class will invoke the client's "on complete" callback method.
+            Classes that inherit from ServiceAgent can oveerite this method to further process the service 
+            call result before calling the client's "on complete" callback method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.ClientIdentity_RetriveAccessTokenCompleteEvent(System.String,System.Exception)">
+            <summary>
+            The callback handler of ClientIdentity after get the access token.
+            </summary>
+            <param name="accessToken">The authorization token.</param>
+            <param name="ex">Coressponding exception if failed to get the access token.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.SendHttpRequest(System.String)">
+            <summary>
+            Send the http request.
+            </summary>
+            <param name="identityToken">The authorization token.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.RequestCallback(System.IAsyncResult)">
+            <summary>
+            Callback method called after request.BeginGetRequestStream completes.
+            </summary>
+            <param name="asyncResult">
+            An asyncResult object.
+            </param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.ResponseCallback(System.IAsyncResult)">
+            <summary>
+            Callback method called after request.BeginGetResponse completes.
+            </summary>
+            <param name="asyncResult">
+            An asyncResult object.
+            </param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.HandleException(System.Exception)">
+            <summary>
+            Handle unexpected exception and fires the UI callback.
+            </summary>
+            <param name="ex">The exception object.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceAgent`1.ConvertStatus(System.Net.HttpStatusCode)">
+            <summary>
+            Method converts HttpStatusCode to Status.
+            </summary>
+            <param name="statusCode">Service http status code.</param>
+            <returns>Hawaii Status code.</returns>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceAgent`1.OnComplete">
+            <summary>
+            Gets or sets OnComplete handler.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceAgent`1.Result">
+            <summary>
+            Gets or sets service result.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceAgent`1.Uri">
+            <summary>
+            Gets or sets service Uri.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceAgent`1.RequestContentType">
+            <summary>
+            Gets the request content type. 
+            </summary>
+            <remarks>
+            Default is application/xml for backwards compatibility.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceAgent`1.RequestMethod">
+            <summary>
+            Gets or sets the HTTP method (GET, POST, PUT or DELETE).
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceAgent`1.ClientIdentity">
+            <summary>
+            Gets or sets the client identity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.ServiceAgent`1.OnCompleteDelegate">
+            <summary>
+            OnCompleteDelegate delegate type definition.
+            </summary>
+            <param name="result">
+            Returns nothing.
+            </param>
+        </member>
+        <member name="T:Microsoft.Hawaii.NamespaceDoc">
+            <summary>
+            The Microsoft.Hawaii provides common functionality for the 
+            client libraries classes that communicate over REST to Hawaii services.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.AdmTokenService">
+            <summary>
+            The adm token service.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmTokenService.TokenExpiredInMinutes">
+            <summary>
+            The token expired in minutes.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmTokenService.NetworkLatency">
+            <summary>
+            The latency from local to Hawaii service in second.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmTokenService.SyncRoot">
+            <summary>
+            The static sync root object for lock.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmTokenService.accessToken">
+            <summary>
+            The instance of Adm Access Token.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmTokenService.dataMarketAccessUri">
+            <summary>
+            The Azure DataMarket token service access Uri.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmTokenService.clientId">
+            <summary>
+            The client Id to access Hawaii Service.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmTokenService.clientSecret">
+            <summary>
+            The client Secret to access Hawaii Service.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmTokenService.targetServiceScope">
+            <summary>
+            The Hawaii service scope.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Hawaii.AdmTokenService.requestDetails">
+            <summary>
+            The request details to retrive Adm access token.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmTokenService.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Hawaii.AdmTokenService"/> class.
+            </summary>
+            <param name="clientId">The Adm client Id.</param>
+            <param name="clientSecret">The Adm client secret.</param>
+            <param name="dataMarketAccessUri">The Adm OAuth endpoint.</param>
+            <param name="targetServiceScope">The target service scope.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmTokenService.GetAccessToken(Microsoft.Hawaii.AdmTokenService.RetriveAdmAccessTokenComplete)">
+            <summary>
+            Gets the Adm access token string.
+            </summary>
+            <param name="callback">callback for the completion of request</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmTokenService.OnRetriveAdmAccessTokenComplete(Microsoft.Hawaii.AdmAccessToken,System.Exception,Microsoft.Hawaii.AdmTokenService.RetriveAdmAccessTokenComplete)">
+            <summary>
+            Help method to fire the RetriveAccessTokenCompleteEvent event.
+            </summary>
+            <param name="accessToken">The accesss token string</param>
+            <param name="ex">Coressponding exception if failed to get the access token.</param>
+            <param name="callback">callback from event</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmTokenService.RetrieveAccessToken(Microsoft.Hawaii.AdmTokenService.RetriveAdmAccessTokenComplete)">
+            <summary>
+            Retrive new access token from Adm service.
+            </summary>
+            <param name="callback">callback from event</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmTokenService.RequestCallback(System.IAsyncResult)">
+            <summary>
+            Callback method called after request.BeginGetRequestStream completes.
+            </summary>
+            <param name="asyncResult">
+            An asyncResult object.
+            </param>
+        </member>
+        <member name="M:Microsoft.Hawaii.AdmTokenService.ResponseCallback(System.IAsyncResult)">
+            <summary>
+            Callback method called after request.BeginGetResponse completes.
+            </summary>
+            <param name="asyncResult">
+            An asyncResult object.
+            </param>
+        </member>
+        <member name="P:Microsoft.Hawaii.AdmTokenService.NeedToReNew">
+            <summary>
+            Gets a value indicating whether need to renew the Adm access token.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.AdmTokenService.RetriveAdmAccessTokenComplete">
+            <summary>
+            The delegate of GetAdmAccessToken event.
+            </summary>
+            <param name="accessToken">The adm access token object.</param>
+            <param name="ex">Coressponding exception if failed to get adm access token.</param>
+        </member>
+        <member name="T:Microsoft.Hawaii.ServiceUri">
+            <summary>
+            Helper class used to create a Service Uri during a service invocation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceUri.#ctor">
+            <summary>
+            Initializes a new instance of the ServiceUri class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceUri.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the ServiceUri class.
+            </summary>
+            <param name="hostUrl">Specifies the host url. For example: http://ocr2.hawaii-services.net.</param>
+            <param name="signature">Specifies the service signature.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceUri.AddQueryString(System.String,System.String)">
+            <summary>
+            A Helper method to add a query string key-value pair.
+            </summary>
+            <param name="key">
+            The key in the query string.
+            </param>
+            <param name="value">
+            The value corresponding to the key.
+            </param>
+        </member>
+        <member name="M:Microsoft.Hawaii.ServiceUri.ToString">
+            <summary>
+            Returns the service uri string.
+            </summary>
+            <returns>A valid Service Uri string.</returns>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceUri.HostUrl">
+            <summary>
+            Gets or sets service host url.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceUri.Signature">
+            <summary>
+            Gets or sets service's REST signature
+            For Example :
+            Service Url : http://hawaiispeech/SpeechRecognition
+            Signature   : SpeechRecognition
+            Service Url : http://hawaiispeech/SpeechRecognition/GrammerName/
+            Signature   : SpeechRecognition/GrammarName.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.ServiceUri.Arguments">
+            <summary>
+            Gets or sets arguments used for the Query String part of the Service Url.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.GuidAuthClientIdentity">
+            <summary>
+            The Hawaii Guid authentication client identity.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.GuidAuthClientIdentity.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the GuidAuthClientIdentity class.
+            </summary>
+            <param name="applicationId">The hawaii application Id.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.GuidAuthClientIdentity.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the GuidAuthClientIdentity class.
+            </summary>
+            <param name="applicationId">The hawaii application Id.</param>
+            <param name="registrationId">The registration Id.</param>
+            <param name="secretKey">The secret key.</param>
+        </member>
+        <member name="M:Microsoft.Hawaii.GuidAuthClientIdentity.Copy">
+            <summary>
+            Override the method to copy Guid authentication identity
+            </summary>
+            <returns>Returns the client identity</returns>
+        </member>
+        <member name="M:Microsoft.Hawaii.GuidAuthClientIdentity.RetriveAccessToken(Microsoft.Hawaii.ClientIdentity.RetriveAccessTokenComplete)">
+            <summary>
+            Override the method to retrive the access token for hawaii Guid authentication.
+            </summary>
+            <param name="callback">callback from event</param>
+        </member>
+        <member name="P:Microsoft.Hawaii.GuidAuthClientIdentity.ApplicationId">
+            <summary>
+            Gets the Hawaii application Id.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.LoggedException">
+            <summary>
+            Used to serialize exception information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.LoggedException.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.LoggedException.Message">
+            <summary>
+            Gets or sets the message.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.LoggedException.Source">
+            <summary>
+            Gets or sets the source.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Hawaii.LoggedException.StackTrace">
+            <summary>
+            Gets or sets the stack trace.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Hawaii.ClientLibraryUtils">
+            <summary>
+            A class to store utility functions used by the client libraries.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Hawaii.ClientLibraryUtils.LookupServiceScopeFromConfig(System.String,System.String)">
+            <summary>
+            Looks for service scope.
+            </summary>
+            <param name="configFilePath">The config file path to look for.</param>
+            <param name="defaultServiceScope">The default value to return if the config file does not exist.</param>
+            <returns>Returns the service service scope.</returns>
+        </member>
+        <member name="M:Microsoft.Hawaii.ClientLibraryUtils.LookupHostNameFromConfig(System.String,System.String)">
+            <summary>
+            Looks for service host name.
+            </summary>
+            <param name="configFilePath">The config file path to look for.</param>
+            <param name="defaultHostName">The default value to return if the config file does not exist.</param>
+            <returns>Returns the service host name</returns>
+        </member>
+        <member name="M:Microsoft.Hawaii.ClientLibraryUtils.LookupConfigFromFile(System.String,System.String)">
+            <summary>
+            The function is used on a desktop client to allow override of defautl service path.
+            It looks for settings within specified file.  If it does not exist, it returns the default.
+            The [SecurityCritical] sttribute is needed due to CA2140 analysis rules.
+            </summary>
+            <param name="configFilePath">The config file path to look for.</param>
+            <param name="defaultValue">The default value to return if the config file does not exist.</param>
+            <returns>The config value specified in the config file, if present.  The default otherwise.</returns>
+        </member>
+    </members>
+</doc>

@@ -49,11 +49,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Devices.Sensors" />
-    <Reference Include="Microsoft.Hawaii.ClientBase">
-      <HintPath>..\..\TheReader\TheReader\libs\Microsoft.Hawaii.ClientBase.dll</HintPath>
+    <Reference Include="Microsoft.Hawaii.ClientBase, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.Hawaii.ClientBase.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Hawaii.Ocr.Client">
-      <HintPath>..\..\..\ImagineCup Project\ReadForBlind\ReadForBlind\libs\Microsoft.Hawaii.Ocr.Client.dll</HintPath>
+    <Reference Include="Microsoft.Hawaii.Ocr.Client, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.Hawaii.Ocr.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Interop" />
