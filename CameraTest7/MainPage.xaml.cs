@@ -108,7 +108,6 @@ namespace CameraTest7
             int w2 = w / 2;     // half the image width
             int h2 = h / 2;     // half the image height
             int[] ARGBPx = new int[w * h];      // original pixels
-            int[] ARGBPl = new int[320 * 240];  // lower resolution pixels
 
             try
             {
@@ -140,6 +139,7 @@ namespace CameraTest7
                 {
                     // Display error message.
                     txtmsg.Text = e.Message;
+                    
                 });
             }
         }
